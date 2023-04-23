@@ -61,7 +61,15 @@ async fn get_command_from_openai(prompt: String) -> String {
 async fn main() {
     dotenv().ok();
     let args: Vec<String> = std::env::args().collect();
+    if args.len() < 2 {
+        let err = "Please provide a prompt. Example:".red();
+        let example = "ct \"delete a file\"".green();
+        println!("{}", err);
+        println!("$ {}", example);
+        std::process::exit(1);
+    }
     let prompt = args[1].clone();
+
     let max_attempts = 10;
 
     let mut prompt_template = format!(
