@@ -26,6 +26,6 @@ python ct.py "read first 10 lines of a file"
 
 ## Examples
 
-[![asciicast](https://asciinema.org/a/OPYtzVWXJL64YhSXX2Nml6fEP.svg)](https://asciinema.org/a/OPYtzVWXJL64YhSXX2Nml6fEP)
+[![asciicast](https://asciinema.org/a/OPYtzVWXJL64YhSXX2Nml6fEP.svg)](https://asciinema.org/a/OPYtzVWXJL64YhSXX2Nml6fEP?autoplay=1)
 
-[![asciicast](https://asciinema.org/a/lHpiN2qGq3nowhTxjXvP60xDP.svg)](https://asciinema.org/a/lHpiN2qGq3nowhTxjXvP60xDP)
+[![asciicast](https://asciinema.org/a/lHpiN2qGq3nowhTxjXvP60xDP.svg)](https://asciinema.org/a/lHpiN2qGq3nowhTxjXvP60xDP?autoplay=1)
