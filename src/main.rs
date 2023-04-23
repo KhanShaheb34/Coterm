@@ -4,6 +4,7 @@ use dotenv::dotenv;
 use reqwest;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
+use std::process::Command;
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Choice {
@@ -81,9 +82,19 @@ async fn main() {
 
         if new_prompt.is_empty() {
             println!("\nRunning command:\n$ {}", format!("{}", command).green());
+            let output = Command::new("sh")
+                .arg("-c")
+                .arg(command)
+                .output()
+                .expect("Error running command");
+            println!("\nOutput:\n{}", String::from_utf8_lossy(&output.stdout));
+            println!("{}", String::from_utf8_lossy(&output.stderr).red());
             break;
         } else {
-            prompt_template = format!("{}{}\nUser: {}\nAI: ", prompt_template, command, new_prompt);
+            prompt_template = format!(
+                "{}{}\nUser: Make this modification to the command: {}\nAI: ",
+                prompt_template, command, new_prompt
+            );
         }
     }
 }
