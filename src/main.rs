@@ -57,6 +57,8 @@ async fn get_command_from_openai(prompt: String) -> String {
     command.to_string()
 }
 
+asdf
+
 #[tokio::main]
 async fn main() {
     dotenv().ok();
