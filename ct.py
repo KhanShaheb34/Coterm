@@ -19,8 +19,9 @@ template_with_history = "{history}\nUser: Make this modification to the command:
 @click.argument("prompt", type=str)
 def ct(prompt):
     llm = OpenAI()
+    max_attempts = 10
 
-    for i in range(5):
+    for i in range(max_attempts):
         command, history = generate_with_prompt(llm, prompt) if i == 0 else generate_with_prompt_and_history(
             llm, prompt, history)
 
@@ -38,6 +39,10 @@ def ct(prompt):
             break
         else:
             prompt = new_prompt
+
+        if i == max_attempts - 1:
+            click.echo(
+                "\nYou have reached the maximum number of attempts. Please try again.")
 
 
 def generate_with_prompt(llm, prompt):
