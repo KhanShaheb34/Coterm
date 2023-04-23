@@ -25,13 +25,16 @@ def ct(prompt):
         command, history = generate_with_prompt(llm, prompt) if i == 0 else generate_with_prompt_and_history(
             llm, prompt, history)
 
-        click.echo("Generated Command: \n\n" +
+        click.echo("\nGenerated Command: \n$ " +
                    click.style(text=command, fg="green"))
 
         new_prompt = click.prompt(
-            "\nPress ENTER to run command, or type a new prompt", default="", show_default=False)
+            "Press ENTER to run command, or type a new prompt", default="", show_default=False)
 
         if new_prompt == "":
+            click.echo("\nRunning Command: \n$ " +
+                       click.style(text=command, fg="green"))
+            click.echo("\nOutput:")
             os.system(command)
             break
         else:
