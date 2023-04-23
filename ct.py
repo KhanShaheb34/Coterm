@@ -8,8 +8,7 @@ import click
 load_dotenv()
 
 os_name = os.name
-shell = os.environ['SHELL'].split('/')[-1]
-template = "User: I want to {prompt} using the " + f"{shell} shell on {os_name}. " + \
+template = "User: I want to {prompt} " + f"on {os_name} OS. " + \
     "What is the command? Write only the command and nothing else." + \
     "\nAI:"
 
