@@ -26,47 +26,6 @@ python ct.py "read first 10 lines of a file"
 
 ## Examples
 
-```
-> python ct.py "read contents of a file"
+[![asciicast](https://asciinema.org/a/OPYtzVWXJL64YhSXX2Nml6fEP.svg)](https://asciinema.org/a/OPYtzVWXJL64YhSXX2Nml6fEP?autoplay=1)
 
-Generated Command:
-$ cat <filename>
-Press ENTER to run command, or type a new prompt: read from README.md
-
-Generated Command:
-$ cat README.md
-Press ENTER to run command, or type a new prompt: read first three lines
-
-Generated Command:
-$ head -n 3 README.md
-Press ENTER to run command, or type a new prompt: <enter>
-
-Running Command:
-$ head -n 3 README.md
-
-Output:
-# 🤖 coterm
-
-Copilot for your terminal
-```
-
-```
-> python ct.py "show all running processes"
-
-Generated Command:
-$ ps -ef
-Press ENTER to run command, or type a new prompt: show only that is running on port 3000
-
-Generated Command:
-$ ps -ef | grep :3000
-Press ENTER to run command, or type a new prompt: kill the process
-
-Generated Command:
-$ kill -9 $(ps -ef | grep :3000 | awk '{print $2}')
-Press ENTER to run command, or type a new prompt: <enter>
-
-Running Command:
-$ kill -9 $(ps -ef | grep :3000 | awk '{print $2}')
-
-Output:
-```
+[![asciicast](https://asciinema.org/a/lHpiN2qGq3nowhTxjXvP60xDP.svg)](https://asciinema.org/a/lHpiN2qGq3nowhTxjXvP60xDP?autoplay=1)
