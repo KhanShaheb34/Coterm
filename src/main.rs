@@ -1,3 +1,5 @@
+use colored::*;
+use dialoguer::Input;
 use dotenv::dotenv;
 use reqwest;
 use serde::{Deserialize, Serialize};
@@ -34,7 +36,7 @@ async fn get_command_from_openai(prompt: String) -> String {
     let params = json!({
         "model": "text-davinci-003",
         "prompt": prompt,
-        "temperature": 0.2
+        "temperature": 0.3,
     });
     let api_key = std::env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY not set");
 
@@ -59,13 +61,29 @@ async fn main() {
     dotenv().ok();
     let args: Vec<String> = std::env::args().collect();
     let prompt = args[1].clone();
+    let max_attempts = 10;
 
-    let prompt_template = format!(
-        "I want to {} on {} OS. What is the command? Write only the command and nothing else.",
+    let mut prompt_template = format!(
+        "User: I want to {} on {} OS. What is the command? Write only the command and nothing else.\nAI: ",
         prompt,
         std::env::consts::OS
     );
 
-    let command = get_command_from_openai(prompt_template).await;
-    println!("Command: {}", command);
+    for _ in 0..max_attempts {
+        let command = get_command_from_openai(prompt_template.clone()).await;
+
+        println!("\nGenerated command:\n$ {}", format!("{}", command).green());
+        let new_prompt = Input::<String>::new()
+            .with_prompt("Press ENTER to run command, or type a new prompt")
+            .allow_empty(true)
+            .interact_text()
+            .expect("Error reading input");
+
+        if new_prompt.is_empty() {
+            println!("\nRunning command:\n$ {}", format!("{}", command).green());
+            break;
+        } else {
+            prompt_template = format!("{}{}\nUser: {}\nAI: ", prompt_template, command, new_prompt);
+        }
+    }
 }
