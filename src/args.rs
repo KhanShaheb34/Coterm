@@ -2,6 +2,7 @@ use clap::Parser;
 
 #[derive(Parser, Debug)]
 #[command(
+    bin_name = "ct",
     author = "KhanShaheb34",
     version = "0.1.0",
     about = "Copilot for your terminal",
