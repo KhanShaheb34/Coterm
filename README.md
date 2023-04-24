@@ -4,6 +4,20 @@ Copilot for your terminal using GPT3
 
 ## Installation
 
+### Automated installation:
+
+```bash
+curl -s https://raw.githubusercontent.com/KhanShaheb34/coterm/main/install.sh | bash
+```
+
+On first run it will ask for your OpenAI API key. You can get it from [here](https://beta.openai.com/account/api-keys).
+
+Later you can change the api key from `$HOME/.coterm/.env` file.
+
+> TODO: Change API key from cli
+
+### Manual installation:
+
 - Install Rust and Cargo from [here](https://www.rust-lang.org/tools/install).
 - Clone the repository and `cd` into it.
 - Make a copy of `.env.example` to `.env` and add OpenAI API key to the environment variable.
