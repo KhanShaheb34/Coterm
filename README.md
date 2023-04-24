@@ -39,3 +39,18 @@ coterm "kill process that is running on port 3000"
 ## Examples
 
 [![asciicast](https://asciinema.org/a/tOqHkyYAiSEWTLWIN1w9xHcMB.svg)](https://asciinema.org/a/tOqHkyYAiSEWTLWIN1w9xHcMB?autoplay=1)
+
+## Contributing
+
+We welcome contributions from the community to help improve and enhance Coterm.
+If you are interested in contributing, please take a moment to review our [Contribution Guidelines](docs/CONTRIBUTING.md) before submitting your changes.
+The guidelines provide information on how to report issues, request new features, contribute code, review contributions, and adhere to our code of conduct.
+We appreciate your support in making Coterm even better and thank you for considering contributing to our project!
+
+## Code of Conduct
+
+Please review and abide by our [Code of Conduct](docs/CODE_OF_CONDUCT.md) at all times during your involvement with this project.
+
+## License
+
+Coterm is licensed under the [GNU GENERAL PUBLIC LICENSE Version 3](LICENSE).
