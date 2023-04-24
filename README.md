@@ -1,4 +1,4 @@
-![coterm banner](images/coterm_banner.png)
+![coterm banner](images/coterm_banner.jpeg)
 
 ## Installation
 
