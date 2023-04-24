@@ -26,13 +26,21 @@ pub async fn get_command_from_openai(prompt: String, api_key: String) -> String 
         .json(&params)
         .send()
         .await
-        .expect("Error sending request")
-        .json::<Completion>()
-        .await
-        .expect("Error parsing response");
+        .expect("Error sending request");
 
-    let command = response.choices[0].text.trim();
-    command.to_string()
+    if response.status().is_success() {
+        let data = response
+            .json::<Completion>()
+            .await
+            .expect("Error parsing response");
+
+        let command = data.choices[0].text.trim();
+        return command.to_string();
+    } else {
+        println!("Error: {}", response.status());
+        println!("{}", response.text().await.expect("Error reading response"));
+        std::process::exit(1);
+    }
 }
 
 pub async fn command_loop(prompt: String, max_attempts: i32, api_key: String) {
