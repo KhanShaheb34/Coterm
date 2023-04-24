@@ -2,34 +2,10 @@ use colored::*;
 use dialoguer::Input;
 use dotenv::dotenv;
 use reqwest;
-use serde::{Deserialize, Serialize};
 use serde_json::json;
 use std::process::Command;
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Choice {
-    finish_reason: String,
-    index: usize,
-    logprobs: Option<()>,
-    text: String,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Usage {
-    completion_tokens: usize,
-    prompt_tokens: usize,
-    total_tokens: usize,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Completion {
-    choices: Vec<Choice>,
-    created: usize,
-    id: String,
-    model: String,
-    object: String,
-    usage: Usage,
-}
+use structs::Completion;
+mod structs;
 
 async fn get_command_from_openai(prompt: String) -> String {
     let client = reqwest::Client::new();
@@ -57,21 +33,7 @@ async fn get_command_from_openai(prompt: String) -> String {
     command.to_string()
 }
 
-#[tokio::main]
-async fn main() {
-    dotenv().ok();
-    let args: Vec<String> = std::env::args().collect();
-    if args.len() < 2 {
-        let err = "Please provide a prompt. Example:".red();
-        let example = "ct \"delete a file\"".green();
-        println!("{}", err);
-        println!("$ {}", example);
-        std::process::exit(1);
-    }
-    let prompt = args[1].clone();
-
-    let max_attempts = 10;
-
+async fn command_loop(prompt: String, max_attempts: i32) {
     let mut prompt_template = format!(
         "User: I want to {} on {} OS. What is the command? Write only the command and nothing else.\nAI: ",
         prompt,
@@ -105,4 +67,21 @@ async fn main() {
             );
         }
     }
+}
+
+#[tokio::main]
+async fn main() {
+    dotenv().ok();
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() < 2 {
+        let err = "Please provide a prompt. Example:".red();
+        let example = "ct \"delete a file\"".green();
+        println!("{}", err);
+        println!("$ {}", example);
+        std::process::exit(1);
+    }
+    let prompt = args[1].clone();
+    let max_attempts = 10;
+
+    command_loop(prompt, max_attempts).await;
 }
