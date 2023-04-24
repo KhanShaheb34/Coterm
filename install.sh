@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # install rust if not already installed
 if ! command -v rustc &> /dev/null
 then

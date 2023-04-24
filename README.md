@@ -5,7 +5,7 @@
 ## Automated installation:
 
 ```bash
-curl -s https://raw.githubusercontent.com/KhanShaheb34/coterm/main/install.sh | sh
+curl -s https://raw.githubusercontent.com/KhanShaheb34/coterm/main/install.sh | bash
 ```
 
 On first run it will ask for your OpenAI API key. You can get it from [here](https://beta.openai.com/account/api-keys).
