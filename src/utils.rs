@@ -6,12 +6,17 @@ use std::{
     path::Path,
 };
 
+fn get_env_path() -> String {
+    let home = env::var("HOME").expect("Error getting HOME environment variable");
+    let key_file = format!("{}/.coterm/key", home);
+    key_file
+}
+
 pub fn manage_environment_variables() {
     match env::var("OPENAI_API_KEY") {
         Ok(_) => {}
         Err(_) => {
-            let home = env::var("HOME").expect("Error getting HOME environment variable");
-            let key_file = format!("{}/.coterm/key", home);
+            let key_file = get_env_path();
             if Path::new(&key_file).exists() {
                 let api_key = fs::read_to_string(key_file.clone()).expect("Error reading key file");
                 env::set_var("OPENAI_API_KEY", api_key);
@@ -23,19 +28,26 @@ pub fn manage_environment_variables() {
                 .with_prompt("OpenAI API Key")
                 .interact_text()
                 .expect("Error reading input");
-            env::set_var("OPENAI_API_KEY", api_key.clone());
 
-            if let Some(parent_dir) = Path::new(&key_file).parent() {
-                if !parent_dir.exists() {
-                    create_dir_all(parent_dir).expect("Error creating key file directory");
-                }
-            }
-
-            let mut file = File::create(key_file.clone()).expect("Error creating key file");
-            file.write_all(api_key.clone().as_bytes())
-                .expect("Error writing to key file");
-
-            println!("Key saved to {}", key_file.clone());
+            set_api_key(api_key)
         }
     }
+}
+
+pub fn set_api_key(api_key: String) {
+    let key_file = get_env_path();
+
+    if let Some(parent_dir) = Path::new(&key_file).parent() {
+        if !parent_dir.exists() {
+            create_dir_all(parent_dir).expect("Error creating key file directory");
+        }
+    }
+
+    let mut file = File::create(key_file.clone()).expect("Error creating key file");
+    file.write_all(api_key.clone().as_bytes())
+        .expect("Error writing to key file");
+
+    env::set_var("OPENAI_API_KEY", api_key.clone());
+
+    println!("Key saved to {}", key_file.clone());
 }

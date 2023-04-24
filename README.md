@@ -1,20 +1,18 @@
 ![coterm banner](images/coterm_banner.jpeg)
 
-## Installation
+# Installation
 
-### Automated installation:
+## Automated installation:
 
 ```bash
 curl -s https://raw.githubusercontent.com/KhanShaheb34/coterm/main/install.sh | sh
 ```
 
 On first run it will ask for your OpenAI API key. You can get it from [here](https://beta.openai.com/account/api-keys).
+It will be stored in `$HOME/.coterm/key` file.
+To change API Key check out [this](#change-api-key) section.
 
-Later you can change the api key from `$HOME/.coterm/.env` file.
-
-> TODO: Change API key from cli
-
-### Manual installation:
+## Manual installation:
 
 - Install Rust and Cargo from [here](https://www.rust-lang.org/tools/install).
 - Clone the repository and `cd` into it.
@@ -24,33 +22,56 @@ Later you can change the api key from `$HOME/.coterm/.env` file.
 
 Get your API key from [here](https://beta.openai.com/account/api-keys).
 
-## Usage
+# Usage
 
 ```bash
-coterm [PROMPT]
+ct [PROMPT]
 ```
 
 For example if you want to read first 3 lines of a file:
 
 ```bash
-coterm "kill process that is running on port 3000"
+ct "kill process that is running on port 3000"
 ```
 
-## Examples
+## Change API Key
+
+You can see your API key in `$HOME/.coterm/key` file.
+It can be changed using this command:
+
+```bash
+ct -a | --api-key <API_KEY>
+```
+
+For example:
+
+```bash
+ct -a sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+
+## Show Help
+
+Check out the help page for more information:
+
+```bash
+ct -h | --help
+```
+
+# Examples
 
 [![asciicast](https://asciinema.org/a/tOqHkyYAiSEWTLWIN1w9xHcMB.svg)](https://asciinema.org/a/tOqHkyYAiSEWTLWIN1w9xHcMB?autoplay=1)
 
-## Contributing
+# Contributing
 
 We welcome contributions from the community to help improve and enhance Coterm.
 If you are interested in contributing, please take a moment to review our [Contribution Guidelines](docs/CONTRIBUTING.md) before submitting your changes.
 The guidelines provide information on how to report issues, request new features, contribute code, review contributions, and adhere to our code of conduct.
 We appreciate your support in making Coterm even better and thank you for considering contributing to our project!
 
-## Code of Conduct
+# Code of Conduct
 
 Please review and abide by our [Code of Conduct](docs/CODE_OF_CONDUCT.md) at all times during your involvement with this project.
 
-## License
+# License
 
 Coterm is licensed under the [GNU GENERAL PUBLIC LICENSE Version 3](LICENSE).
