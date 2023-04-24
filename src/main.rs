@@ -5,7 +5,9 @@ use reqwest;
 use serde_json::json;
 use std::process::Command;
 use structs::Completion;
+use utils::manage_environment_variables;
 mod structs;
+mod utils;
 
 async fn get_command_from_openai(prompt: String) -> String {
     let client = reqwest::Client::new();
@@ -72,6 +74,8 @@ async fn command_loop(prompt: String, max_attempts: i32) {
 #[tokio::main]
 async fn main() {
     dotenv().ok();
+    manage_environment_variables();
+
     let args: Vec<String> = std::env::args().collect();
     if args.len() < 2 {
         let err = "Please provide a prompt. Example:".red();
