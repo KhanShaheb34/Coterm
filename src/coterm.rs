@@ -5,10 +5,7 @@ use reqwest;
 use serde_json::json;
 use std::process::Command;
 
-pub async fn get_command_from_openai(prompt: String) -> String {
-    let api_key = std::env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY not set");
-    println!("API Key: {}", api_key);
-
+pub async fn get_command_from_openai(prompt: String, api_key: String) -> String {
     let client = reqwest::Client::new();
     let url = "https://api.openai.com/v1/completions";
     let params = json!({
@@ -22,7 +19,10 @@ pub async fn get_command_from_openai(prompt: String) -> String {
     let response = client
         .post(url)
         .header("Content-Type", "application/json")
-        .header("Authorization", format!("Bearer {}", api_key).as_str())
+        .header(
+            "Authorization",
+            format!("Bearer {}", api_key.clone()).as_str(),
+        )
         .json(&params)
         .send()
         .await
@@ -35,7 +35,7 @@ pub async fn get_command_from_openai(prompt: String) -> String {
     command.to_string()
 }
 
-pub async fn command_loop(prompt: String, max_attempts: i32) {
+pub async fn command_loop(prompt: String, max_attempts: i32, api_key: String) {
     let mut prompt_template = format!(
         "User: I want to {} on {}. What is the shell command? Write only the shell command and nothing else.\nAI:",
         prompt,
@@ -43,7 +43,7 @@ pub async fn command_loop(prompt: String, max_attempts: i32) {
     );
 
     for i in 0..max_attempts {
-        let command = get_command_from_openai(prompt_template.clone()).await;
+        let command = get_command_from_openai(prompt_template.clone(), api_key.clone()).await;
 
         println!("\nGenerated command:\n$ {}", format!("{}", command).green());
         let new_prompt = Input::<String>::new()
