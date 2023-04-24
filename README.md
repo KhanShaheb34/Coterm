@@ -1,13 +1,11 @@
-# 🤖 coterm
-
-Copilot for your terminal using GPT3
+![coterm banner](images/coterm_banner.png)
 
 ## Installation
 
 ### Automated installation:
 
 ```bash
-curl -s https://raw.githubusercontent.com/KhanShaheb34/coterm/main/install.sh | bash
+curl -s https://raw.githubusercontent.com/KhanShaheb34/coterm/main/install.sh | sh
 ```
 
 On first run it will ask for your OpenAI API key. You can get it from [here](https://beta.openai.com/account/api-keys).
@@ -28,14 +26,16 @@ Get your API key from [here](https://beta.openai.com/account/api-keys).
 
 ## Usage
 
-- Run `coterm` in your terminal.
-- Type your prompt and press `Enter`.
-- Press `Ctrl + C` to exit.
+```bash
+coterm [PROMPT]
+```
 
-> TODO: Create binary for easy installation
+For example if you want to read first 3 lines of a file:
+
+```bash
+coterm "kill process that is running on port 3000"
+```
 
 ## Examples
 
-[![asciicast](https://asciinema.org/a/OPYtzVWXJL64YhSXX2Nml6fEP.svg)](https://asciinema.org/a/OPYtzVWXJL64YhSXX2Nml6fEP?autoplay=1)
-
-[![asciicast](https://asciinema.org/a/lHpiN2qGq3nowhTxjXvP60xDP.svg)](https://asciinema.org/a/lHpiN2qGq3nowhTxjXvP60xDP?autoplay=1)
+[![asciicast](https://asciinema.org/a/tOqHkyYAiSEWTLWIN1w9xHcMB.svg)](https://asciinema.org/a/tOqHkyYAiSEWTLWIN1w9xHcMB?autoplay=1)
