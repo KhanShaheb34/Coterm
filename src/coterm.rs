@@ -6,6 +6,9 @@ use serde_json::json;
 use std::process::Command;
 
 pub async fn get_command_from_openai(prompt: String) -> String {
+    let api_key = std::env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY not set");
+    println!("API Key: {}", api_key);
+
     let client = reqwest::Client::new();
     let url = "https://api.openai.com/v1/completions";
     let params = json!({
@@ -15,9 +18,6 @@ pub async fn get_command_from_openai(prompt: String) -> String {
         "temperature": 0.3,
         "best_of": 3,
     });
-    let api_key = std::env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY not set");
-
-    print!("API Key: {}", api_key);
 
     let response = client
         .post(url)
