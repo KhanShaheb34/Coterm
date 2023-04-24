@@ -15,7 +15,9 @@ async fn get_command_from_openai(prompt: String) -> String {
     let params = json!({
         "model": "text-davinci-003",
         "prompt": prompt,
+        "max_tokens": 256,
         "temperature": 0.3,
+        "best_of": 3,
     });
     let api_key = std::env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY not set");
 
@@ -37,12 +39,12 @@ async fn get_command_from_openai(prompt: String) -> String {
 
 async fn command_loop(prompt: String, max_attempts: i32) {
     let mut prompt_template = format!(
-        "User: I want to {} on {} OS. What is the command? Write only the command and nothing else.\nAI: ",
+        "User: I want to {} on {}. What is the shell command? Write only the shell command and nothing else.\nAI:",
         prompt,
         std::env::consts::OS
     );
 
-    for _ in 0..max_attempts {
+    for i in 0..max_attempts {
         let command = get_command_from_openai(prompt_template.clone()).await;
 
         println!("\nGenerated command:\n$ {}", format!("{}", command).green());
@@ -67,6 +69,10 @@ async fn command_loop(prompt: String, max_attempts: i32) {
                 "{}{}\nUser: Make this modification to the command: {}\nAI: ",
                 prompt_template, command, new_prompt
             );
+        }
+
+        if i == max_attempts - 1 {
+            println!("Max attempts reached. Exiting.");
         }
     }
 }
