@@ -17,6 +17,8 @@ pub async fn get_command_from_openai(prompt: String) -> String {
     });
     let api_key = std::env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY not set");
 
+    print!("API Key: {}", api_key);
+
     let response = client
         .post(url)
         .header("Content-Type", "application/json")
