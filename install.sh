@@ -19,12 +19,12 @@ cd coterm
 
 # install the binary
 echo "Installing the binary..."
-cargou build --release
+cargo build --release
 
 # copy the binary to PATH
 echo "Copying the binary to PATH..."
-sudo cp target/release/coterm /usr/local/bin/ct
-sudo cp target/release/coterm /usr/local/bin/coterm
+sudo cp ./target/release/coterm /usr/local/bin/ct
+sudo cp ./target/release/coterm /usr/local/bin/coterm
 
 # change directory to the home directory
 cd $HOME
