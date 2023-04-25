@@ -10,7 +10,7 @@ pub async fn get_command_from_openai(prompt_blocks: Vec<PromptBlock>) -> String 
     let url = "https://coterm.vercel.app/api/openai";
     let params = json!({
         "prompts": prompt_blocks,
-        "os": "macos"
+        "os": std::env::consts::OS,
     });
 
     let response = client
