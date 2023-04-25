@@ -7,26 +7,8 @@ pub struct PromptBlock {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Choice {
-    finish_reason: String,
-    index: usize,
-    logprobs: Option<()>,
-    pub text: String,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Usage {
-    completion_tokens: usize,
-    prompt_tokens: usize,
-    total_tokens: usize,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct Completion {
-    pub choices: Vec<Choice>,
-    created: usize,
-    id: String,
-    model: String,
-    object: String,
-    usage: Usage,
+pub struct Response {
+    pub success: bool,
+    pub message: String,
+    pub commands: Vec<String>,
 }

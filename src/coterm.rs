@@ -1,4 +1,4 @@
-use crate::structs::{Completion, PromptBlock};
+use crate::structs::{PromptBlock, Response};
 use colored::*;
 use dialoguer::Input;
 use reqwest;
@@ -7,7 +7,7 @@ use std::{mem, process::Command};
 
 pub async fn get_command_from_openai(prompt_blocks: Vec<PromptBlock>) -> String {
     let client = reqwest::Client::new();
-    let url = "http://127.0.0.1:3001/api/openai";
+    let url = "https://coterm.vercel.app/api/openai";
     let params = json!({
         "prompts": prompt_blocks,
         "os": "macos"
@@ -23,12 +23,16 @@ pub async fn get_command_from_openai(prompt_blocks: Vec<PromptBlock>) -> String 
 
     if response.status().is_success() {
         let data = response
-            .json::<Completion>()
+            .json::<Response>()
             .await
             .expect("Error parsing response");
 
-        let command = data.choices[0].text.trim();
-        return command.to_string();
+        if data.success == false {
+            println!("Error: {}", data.message);
+            std::process::exit(1);
+        }
+
+        return data.commands[0].clone();
     } else {
         println!("Error: {}", response.status());
         println!("{}", response.text().await.expect("Error reading response"));
