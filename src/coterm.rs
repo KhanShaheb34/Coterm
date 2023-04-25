@@ -1,28 +1,21 @@
-use crate::structs::Completion;
+use crate::structs::{PromptBlock, Response};
 use colored::*;
 use dialoguer::Input;
 use reqwest;
 use serde_json::json;
-use std::process::Command;
+use std::{mem, process::Command};
 
-pub async fn get_command_from_openai(prompt: String, api_key: String) -> String {
+pub async fn get_command_from_openai(prompt_blocks: Vec<PromptBlock>) -> String {
     let client = reqwest::Client::new();
-    let url = "https://api.openai.com/v1/completions";
+    let url = "https://coterm.vercel.app/api/openai";
     let params = json!({
-        "model": "text-davinci-003",
-        "prompt": prompt,
-        "max_tokens": 256,
-        "temperature": 0.3,
-        "best_of": 3,
+        "prompts": prompt_blocks,
+        "os": "macos"
     });
 
     let response = client
         .post(url)
         .header("Content-Type", "application/json")
-        .header(
-            "Authorization",
-            format!("Bearer {}", api_key.clone()).as_str(),
-        )
         .json(&params)
         .send()
         .await
@@ -30,12 +23,16 @@ pub async fn get_command_from_openai(prompt: String, api_key: String) -> String 
 
     if response.status().is_success() {
         let data = response
-            .json::<Completion>()
+            .json::<Response>()
             .await
             .expect("Error parsing response");
 
-        let command = data.choices[0].text.trim();
-        return command.to_string();
+        if data.success == false {
+            println!("Error: {}", data.message);
+            std::process::exit(1);
+        }
+
+        return data.commands[0].clone();
     } else {
         println!("Error: {}", response.status());
         println!("{}", response.text().await.expect("Error reading response"));
@@ -43,15 +40,16 @@ pub async fn get_command_from_openai(prompt: String, api_key: String) -> String 
     }
 }
 
-pub async fn command_loop(prompt: String, max_attempts: i32, api_key: String) {
-    let mut prompt_template = format!(
-        "User: I want to {} on {}. What is the shell command? Write only the shell command and nothing else.\nAI:",
-        prompt,
-        std::env::consts::OS
-    );
+pub async fn command_loop(prompt: String, max_attempts: usize) {
+    let mut prompt_blocks: Vec<PromptBlock> = Vec::new();
+    prompt_blocks.push(PromptBlock {
+        user: prompt.clone(),
+        ai: "".to_string(),
+    });
 
     for i in 0..max_attempts {
-        let command = get_command_from_openai(prompt_template.clone(), api_key.clone()).await;
+        let command = get_command_from_openai(prompt_blocks.clone()).await;
+        let _ = mem::replace(&mut prompt_blocks[i].ai, command.clone());
 
         println!("\nGenerated command:\n$ {}", format!("{}", command).green());
         let new_prompt = Input::<String>::new()
@@ -71,10 +69,10 @@ pub async fn command_loop(prompt: String, max_attempts: i32, api_key: String) {
             println!("{}", String::from_utf8_lossy(&output.stderr).red());
             break;
         } else {
-            prompt_template = format!(
-                "{}{}\nUser: Make this modification to the command: {}\nAI: ",
-                prompt_template, command, new_prompt
-            );
+            prompt_blocks.push(PromptBlock {
+                user: new_prompt.clone(),
+                ai: "".to_string(),
+            });
         }
 
         if i == max_attempts - 1 {

@@ -8,19 +8,12 @@
 curl -s https://raw.githubusercontent.com/KhanShaheb34/coterm/main/install.sh | bash
 ```
 
-On first run it will ask for your OpenAI API key. You can get it from [here](https://beta.openai.com/account/api-keys).
-It will be stored in `$HOME/.coterm/key` file.
-To change API Key check out [this](#change-api-key) section.
-
 ## Manual installation:
 
 - Install Rust and Cargo from [here](https://www.rust-lang.org/tools/install).
 - Clone the repository and `cd` into it.
-- Make a copy of `.env.example` to `.env` and add OpenAI API key to the environment variable.
 - Run `cargo build --release` to build the binary.
 - Copy the binary from `target/release/coterm` to your `PATH`.
-
-Get your API key from [here](https://beta.openai.com/account/api-keys).
 
 # Usage
 
@@ -32,21 +25,6 @@ For example if you want to read first 3 lines of a file:
 
 ```bash
 ct "kill process that is running on port 3000"
-```
-
-## Change API Key
-
-You can see your API key in `$HOME/.coterm/key` file.
-It can be changed using this command:
-
-```bash
-ct -a | --api-key <API_KEY>
-```
-
-For example:
-
-```bash
-ct -a sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
 ## Show Help
