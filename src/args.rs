@@ -12,10 +12,6 @@ pub struct CotermArgs {
     #[clap()]
     /// What do you want to do?
     pub prompt: Vec<String>,
-
-    #[arg(short, long)]
-    /// Set API key for OpenAI
-    pub api_key: Option<String>,
 }
 
 pub fn validate_prompt(prompt: String) {

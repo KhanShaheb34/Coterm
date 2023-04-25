@@ -1,5 +1,11 @@
 use serde::{Deserialize, Serialize};
 
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct PromptBlock {
+    pub user: String,
+    pub ai: String,
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Choice {
     finish_reason: String,
