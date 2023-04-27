@@ -1,5 +1,8 @@
 ![coterm banner](images/coterm_banner.jpeg)
 
+![Platforms](https://img.shields.io/badge/Platform-linux%20%7C%20macos-blue?logo=linux&style=flat-square&logoColor=white) ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FKhanShaheb34%2Fcoterm&count_bg=%23B7410E&title_bg=%23555555&icon=rust.svg&icon_color=%23E7E7E7&title=Coterm&edge_flat=true)
+
+
 # Installation
 
 ## Automated installation:
