@@ -7,7 +7,7 @@ use std::{mem, process::Command};
 
 pub async fn get_command_from_openai(prompt_blocks: Vec<PromptBlock>) -> String {
     let client = reqwest::Client::new();
-    let url = "https://coterm.vercel.app/api/openai";
+    let url = "https://coterm.vercel.app/api/edge";
     let params = json!({
         "prompts": prompt_blocks,
         "os": std::env::consts::OS,
