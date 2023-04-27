@@ -27,8 +27,13 @@ ct [PROMPT]
 For example if you want to read first 3 lines of a file:
 
 ```bash
-ct "kill process that is running on port 3000"
+ct list ts files
 ```
+
+And after the tool generates a command you can add revisions to it, for example:
+- ignore node modules
+- sort by size
+- etc.
 
 ## Show Help
 
