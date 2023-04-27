@@ -8,7 +8,7 @@ description = "Copilot for your terminal"
 readme = "README.md"
 homepage = "https://github.com/KhanShaheb34/Coterm"
 repository = "https://github.com/KhanShaheb34/Coterm"
-keywords = ["cli", "copilot", "terminal", "ai", "gpt3", "openai"]
+keywords = ["cli", "copilot", "terminal", "ai", "gpt3"]
 categories = ["command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
