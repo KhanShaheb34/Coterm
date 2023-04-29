@@ -9,6 +9,8 @@ cache:
 
 DEPLOY_TO_GITHUB: &DEPLOY_TO_GITHUB
   before_deploy:
+    - export TRAVIS_TAG="v$(grep '^version' Cargo.toml | cut -d '"' -f2)"
+    - echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
     - git config --local user.name "KhanShaheb34"
     - git config --local user.email "shakirulhkhan@gmail.com"
     - name="coterm-$TRAVIS_TAG-$TARGET"
