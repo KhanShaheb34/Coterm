@@ -3,7 +3,9 @@ sudo: false
 
 cache:
   directories:
-    - /home/travis/.cargo
+    - $TRAVIS_HOME/.cache/sccache
+    - $TRAVIS_HOME/.cargo/
+    - $TRAVIS_HOME/.rustup/
 
 DEPLOY_TO_GITHUB: &DEPLOY_TO_GITHUB
   before_deploy:
@@ -30,6 +32,8 @@ matrix:
         - rustup component add rustfmt-preview
         - cargo fmt --version
         - cargo fmt --all -- --check
+      on:
+        branch: main
 
     - name: Linux Binary
       env: TARGET=x86_64-unknown-linux-musl
