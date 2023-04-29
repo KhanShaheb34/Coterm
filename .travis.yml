@@ -21,6 +21,8 @@ DEPLOY_TO_GITHUB: &DEPLOY_TO_GITHUB
     api_key: $GH_TOKEN
     file: coterm-$TARGET.tar.gz
     skip_cleanup: true
+    on:
+      branch: ci
 
 matrix:
   include:
@@ -44,6 +46,8 @@ matrix:
         apt:
           packages:
             - musl-tools
+            - pkg-config
+            - libssl-dev
       <<: *DEPLOY_TO_GITHUB
 
     - name: macOS Binary
