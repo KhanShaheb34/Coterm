@@ -1,0 +1,10 @@
+language: rust
+sudo: false
+
+cache:
+  directories:
+    - /home/travis/.cargo
+
+notifications:
+  email:
+    on_success: never
