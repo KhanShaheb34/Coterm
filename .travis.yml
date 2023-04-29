@@ -59,6 +59,14 @@ matrix:
       install: true
       <<: *DEPLOY_TO_GITHUB
 
+    - name: macOS Binary
+      env: MACOSX_DEPLOYMENT_TARGET=10.7 TARGET=aarch64-apple-darwin
+      os: osx
+      rust: nightly
+      script: cargo build --release --target $TARGET
+      install: true
+      <<: *DEPLOY_TO_GITHUB
+
 branches:
   only:
     - main
