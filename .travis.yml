@@ -11,7 +11,7 @@ DEPLOY_TO_GITHUB: &DEPLOY_TO_GITHUB
   before_deploy:
     - git config --local user.name "KhanShaheb34"
     - git config --local user.email "shakirulhkhan@gmail.com"
-    - name="coterm-$TARGET"
+    - name="coterm-$TRAVIS_TAG-$TARGET"
     - mkdir $name
     - cp target/$TARGET/release/coterm $name/
     - cp README.md LICENSE $name/
@@ -19,7 +19,7 @@ DEPLOY_TO_GITHUB: &DEPLOY_TO_GITHUB
   deploy:
     provider: releases
     api_key: $GH_TOKEN
-    file: coterm-$TARGET.tar.gz
+    file: coterm-$TRAVIS_TAG-$TARGET.tar.gz
     skip_cleanup: true
     on:
       branch: ci
