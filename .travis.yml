@@ -20,7 +20,7 @@ matrix:
       env: TARGET=x86_64-unknown-linux-musl
       rust: nightly
       before_script: rustup target add $TARGET
-      script: cargo build --release --target $TARGET --features vendored-openssl
+      script: cargo build --release --target $TARGET
 
     - name: macOS Binary
       env: MACOSX_DEPLOYMENT_TARGET=10.7 TARGET=x86_64-apple-darwin
