@@ -67,6 +67,10 @@ matrix:
       before_script: rustup target add $TARGET
       script: cargo build --release --target $TARGET
       install: true
+      addons:
+        homebrew:
+          packages:
+            - openssl
       <<: *DEPLOY_TO_GITHUB
 
 branches:
