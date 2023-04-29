@@ -65,7 +65,6 @@ matrix:
       os: osx
       rust: nightly
       before_script:
-        - brew update --force
         - brew install openssl
         - rustup target add $TARGET
       script: cargo build --release --target $TARGET
