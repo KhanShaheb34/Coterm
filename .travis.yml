@@ -36,6 +36,10 @@ matrix:
       rust: nightly
       before_script: rustup target add $TARGET
       script: cargo build --release --target $TARGET
+      addons:
+        apt:
+          packages:
+            - musl-tools
       <<: *DEPLOY_TO_GITHUB
 
     - name: macOS Binary
