@@ -11,7 +11,7 @@ matrix:
       env: RUST_BACKTRACE=1
       rust: nightly
       script:
-        - cargo test --locked
+        - cargo test
         - rustup component add rustfmt-preview
         - cargo fmt --version
         - cargo fmt --all -- --check
@@ -20,13 +20,13 @@ matrix:
       env: TARGET=x86_64-unknown-linux-musl
       rust: nightly
       before_script: rustup target add $TARGET
-      script: cargo build --release --target $TARGET --locked --features vendored-openssl
+      script: cargo build --release --target $TARGET --features vendored-openssl
 
     - name: macOS Binary
       env: MACOSX_DEPLOYMENT_TARGET=10.7 TARGET=x86_64-apple-darwin
       os: osx
       rust: nightly
-      script: cargo build --release --target $TARGET --locked
+      script: cargo build --release --target $TARGET
       install: true
 
 branches:
