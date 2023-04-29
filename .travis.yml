@@ -71,6 +71,7 @@ matrix:
         homebrew:
           packages:
             - openssl
+          update: true
       <<: *DEPLOY_TO_GITHUB
 
 branches:
