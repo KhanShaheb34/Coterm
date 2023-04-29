@@ -25,7 +25,6 @@ DEPLOY_TO_GITHUB: &DEPLOY_TO_GITHUB
     skip_cleanup: true
     on:
       branch: ci
-      tags: true
 
 matrix:
   include:
@@ -55,14 +54,6 @@ matrix:
 
     - name: macOS Binary
       env: MACOSX_DEPLOYMENT_TARGET=10.7 TARGET=x86_64-apple-darwin
-      os: osx
-      rust: nightly
-      script: cargo build --release --target $TARGET
-      install: true
-      <<: *DEPLOY_TO_GITHUB
-
-    - name: macOS Binary
-      env: MACOSX_DEPLOYMENT_TARGET=10.7 TARGET=aarch64-apple-darwin
       os: osx
       rust: nightly
       script: cargo build --release --target $TARGET
