@@ -28,7 +28,6 @@ DEPLOY_TO_GITHUB: &DEPLOY_TO_GITHUB
     body: "This is an automated pre-release."
     on:
       branch: main
-      tags: true
 
 matrix:
   include:
