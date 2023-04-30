@@ -10,9 +10,9 @@ cache:
 DEPLOY_TO_GITHUB: &DEPLOY_TO_GITHUB
   before_deploy:
     - export TRAVIS_TAG="v$(grep '^version' Cargo.toml | cut -d '"' -f2)"
-    - echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
     - git config --local user.name "KhanShaheb34"
     - git config --local user.email "shakirulhkhan@gmail.com"
+    - git tag $TRAVIS_TAG
     - name="coterm-$TRAVIS_TAG-$TARGET"
     - mkdir $name
     - cp target/$TARGET/release/coterm $name/
@@ -23,8 +23,12 @@ DEPLOY_TO_GITHUB: &DEPLOY_TO_GITHUB
     api_key: $GH_TOKEN
     file: coterm-$TRAVIS_TAG-$TARGET.tar.gz
     skip_cleanup: true
+    prerelease: true
+    name: $TRAVIS_TAG
+    body: "This is an automated pre-release."
     on:
-      branch: ci
+      branch: main
+      tags: true
 
 matrix:
   include:
@@ -56,17 +60,6 @@ matrix:
       env: MACOSX_DEPLOYMENT_TARGET=10.7 TARGET=x86_64-apple-darwin
       os: osx
       rust: nightly
-      script: cargo build --release --target $TARGET
-      install: true
-      <<: *DEPLOY_TO_GITHUB
-
-    - name: macOS ARM Binary
-      env: MACOSX_DEPLOYMENT_TARGET=10.7 TARGET=aarch64-apple-darwin
-      os: osx
-      rust: nightly
-      before_script:
-        - brew install openssl
-        - rustup target add $TARGET
       script: cargo build --release --target $TARGET
       install: true
       <<: *DEPLOY_TO_GITHUB
