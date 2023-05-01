@@ -12,7 +12,7 @@ DEPLOY_TO_GITHUB: &DEPLOY_TO_GITHUB
     - export TRAVIS_TAG="v$(grep '^version' Cargo.toml | cut -d '"' -f2)"
     - git config --local user.name "KhanShaheb34"
     - git config --local user.email "shakirulhkhan@gmail.com"
-    - git tag $TRAVIS_TAG
+    - git tag $TRAVIS_TAG -f
     - name="coterm-$TRAVIS_TAG-$TARGET"
     - mkdir $name
     - cp target/$TARGET/release/coterm $name/
