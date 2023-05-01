@@ -1,16 +1,33 @@
 ![coterm banner](images/coterm_banner.jpeg)
 
-![Platforms](https://img.shields.io/badge/Platform-linux%20%7C%20macos-blue?logo=linux&style=flat-square&logoColor=white) ![Travis (.com)](https://img.shields.io/travis/com/KhanShaheb34/Coterm?logo=travis) ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FKhanShaheb34%2Fcoterm&count_bg=%23B7410E&title_bg=%23555555&icon=rust.svg&icon_color=%23E7E7E7&title=Coterm&edge_flat=true)
+![Platforms](https://img.shields.io/badge/Platform-linux%20%7C%20macos-blue?logo=linux&style=flat-square&logoColor=white) ![Travis (.com)](https://img.shields.io/travis/com/KhanShaheb34/Coterm?logo=travis) [![GitHub all releases](https://img.shields.io/github/downloads/KhanShaheb34/Coterm/total?logo=github)](https://github.com/KhanShaheb34/Coterm/releases/latest) [![Crates.io](https://img.shields.io/crates/d/Coterm?logo=rust)](https://crates.io/crates/coterm) ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FKhanShaheb34%2Fcoterm&count_bg=%23B7410E&title_bg=%23555555&&title=hits&edge_flat=true)
 
 # Installation
 
 ## Automated installation:
 
 ```bash
-curl -s https://raw.githubusercontent.com/KhanShaheb34/coterm/main/install.sh | bash
+curl -s https://coterm.vercel.app/install.sh | bash
 ```
 
-## Manual installation:
+This will install the latest version of Coterm and add `ct` alias for you.
+If it does not support your platform, please check out [Build from source](#build-from-source) section.
+
+Note that this script will install Coterm in `/usr/local/bin` directory.
+It might ask for your password to do so.
+
+> Running a script from the internet is not a good idea. Please check the script before running it.
+
+## Using Cargo
+
+```bash
+cargo install coterm
+```
+
+You need to have Rust and Cargo installed to use this method. See [here](https://www.rust-lang.org/tools/install) for more information.
+And this installation does not add `ct` alias for you. You need to add it manually.
+
+## Build from source
 
 - Install Rust and Cargo from [here](https://www.rust-lang.org/tools/install).
 - Clone the repository and `cd` into it.
