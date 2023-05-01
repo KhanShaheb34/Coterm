@@ -22,3 +22,4 @@ dotenv = "0.15.0"
 dialoguer = "0.10.4"
 colored = "2.0.0"
 clap = { version = "4.2.4", features = ["derive"] }
+openssl = { version = "0.10", features = ["vendored"] }

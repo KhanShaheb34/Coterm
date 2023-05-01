@@ -3,7 +3,70 @@ sudo: false
 
 cache:
   directories:
-    - /home/travis/.cargo
+    - $TRAVIS_HOME/.cache/sccache
+    - $TRAVIS_HOME/.cargo/
+    - $TRAVIS_HOME/.rustup/
+
+DEPLOY_TO_GITHUB: &DEPLOY_TO_GITHUB
+  before_deploy:
+    - export TRAVIS_TAG="v$(grep '^version' Cargo.toml | cut -d '"' -f2)"
+    - git config --local user.name "KhanShaheb34"
+    - git config --local user.email "shakirulhkhan@gmail.com"
+    - git tag $TRAVIS_TAG
+    - name="coterm-$TRAVIS_TAG-$TARGET"
+    - mkdir $name
+    - cp target/$TARGET/release/coterm $name/
+    - cp README.md LICENSE $name/
+    - tar czvf $name.tar.gz $name
+  deploy:
+    provider: releases
+    api_key: $GH_TOKEN
+    file: coterm-$TRAVIS_TAG-$TARGET.tar.gz
+    skip_cleanup: true
+    prerelease: true
+    name: $TRAVIS_TAG
+    body: "This is an automated pre-release."
+    on:
+      branch: main
+
+matrix:
+  include:
+    - name: Tests
+      env: RUST_BACKTRACE=1
+      rust: nightly
+      script:
+        - cargo test
+        - rustup component add rustfmt-preview
+        - cargo fmt --version
+        - cargo fmt --all -- --check
+      on:
+        branch: main
+
+    - name: Linux Binary
+      env: TARGET=x86_64-unknown-linux-musl
+      rust: nightly
+      before_script: rustup target add $TARGET
+      script: cargo build --release --target $TARGET
+      addons:
+        apt:
+          packages:
+            - musl-tools
+            - pkg-config
+            - libssl-dev
+      <<: *DEPLOY_TO_GITHUB
+
+    - name: macOS Binary
+      env: MACOSX_DEPLOYMENT_TARGET=10.7 TARGET=x86_64-apple-darwin
+      os: osx
+      rust: nightly
+      script: cargo build --release --target $TARGET
+      install: true
+      <<: *DEPLOY_TO_GITHUB
+
+branches:
+  only:
+    - main
+    - ci
 
 notifications:
   email:
